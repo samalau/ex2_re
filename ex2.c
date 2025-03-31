@@ -7,7 +7,7 @@ Assignment: ex2
 #include <stdio.h>
 
 int main() {
-	// Case 1: Draw Happy Face with given symbols for eyes, nose and mouse
+	// Case 1: Draw Happy Face with given symbols for eyes, nose and mouth
 	/* Example:
 	* n = 3:
 	* 0   0
