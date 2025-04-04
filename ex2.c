@@ -65,6 +65,7 @@ long long enterNumber(int task) {
 	int input = 0;
 	while ((input = scanf(" %lld", &numberTmp)) != 1
 			|| numberTmp <= 0
+			|| task == UNSELECTED
 			|| (task == HAPPYFACE && numberTmp % 2 == 0)
 		) {
 		if (input == TERMINATE) {
@@ -99,10 +100,9 @@ long long enterNumber(int task) {
 		}
 	}
 	number = numberTmp;
-	if (task == UNSELECTED && number == GOODBYE) {
-		return terminate();
-	}
-	return number;
+	return (task == UNSELECTED && number == GOODBYE)
+					? terminate()
+				: number;
 }
 
 double absDif(double n, double m) {
