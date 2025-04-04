@@ -99,6 +99,7 @@ long long enterNumber(int task) {
 			}
 		}
 	}
+	scanf("%*[^\n]");
 	number = numberTmp;
 	return (task == UNSELECTED && number == GOODBYE)
 					? terminate()
