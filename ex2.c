@@ -64,32 +64,38 @@ long long enterNumber(int task) {
 	long long number = 0, numberTmp = 0;
 	int input = 0;
 	char caution = 0;
-	while ((input = scanf(" %lld%c", &numberTmp, &caution)) != 2 || caution != '\n' || numberTmp <= 0 || (task == UNSELECTED && (numberTmp < HAPPYFACE || numberTmp > GOODBYE)) || (task == HAPPYFACE && numberTmp % 2 == 0)) {
-		if (input != TERMINATE) {
-			if (caution != '\n') {
-				scanf("%*[^\n]");
-			}
-			switch(task) {
-				case UNSELECTED: {
-					printf("This option is not available, please try again.\n");
-					break;
-				}
-				case HAPPYFACE: {
-					printf("The face's size must be an odd and positive number, please try again:\n");
-					break;
-				}
-				case FESTIVAL: {
-					printf("Only positive maximum number is allowed, please try again:\n");
-					break;
-				}
-				default: {
-					printf("Only positive number is allowed, please try again:\n");
-					break;
-				}
-			}
-			continue;
+	while ((input = scanf(" %lld%c", &numberTmp, &caution)) != 2 || caution != '\n' || numberTmp <= 0 || (task == HAPPYFACE && numberTmp % 2 == 0)) {
+		if (input == TERMINATE) {
+			return terminate();
 		}
-		return terminate();
+		if (caution != '\n') {
+			scanf("%*[^\n]");
+		}
+		switch(task) {
+			case UNSELECTED: {
+				if (numberTmp == GOODBYE) {
+					return terminate();
+				}
+				if (numberTmp >= HAPPYFACE && numberTmp <= GOODBYE) {
+					number = numberTmp;
+					return number;
+				}
+				printf("This option is not available, please try again.\n");
+				break;
+			}
+			case HAPPYFACE: {
+				printf("The face's size must be an odd and positive number, please try again:\n");
+				break;
+			}
+			case FESTIVAL: {
+				printf("Only positive maximum number is allowed, please try again:\n");
+				break;
+			}
+			default: {
+				printf("Only positive number is allowed, please try again:\n");
+				break;
+			}
+		}
 	}
 	number = numberTmp;
 	if (task == UNSELECTED && number == GOODBYE) {
