@@ -84,6 +84,7 @@ long long enterNumber(int task) {
 				break;
 			}
 			case HAPPYFACE: {
+				scanf("%*[^\n]");
 				printf("The face's size must be an odd and positive number, please try again:\n");
 				break;
 			}
@@ -124,11 +125,11 @@ void happyFace() {
 	char eyes = 0, nose = 0, mouth = 0;
 	int input = 0;
 	while ((input = scanf(" %c %c %c", &eyes, &nose, &mouth)) != 3) {
+		scanf("%*[^\n]");
 		if (input == TERMINATE) {
 			terminate();
 			return;
 		}
-		scanf("%*[^\n]");
 	}
 	scanf("%*[^\n]");
 
