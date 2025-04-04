@@ -1,6 +1,6 @@
 /******************
 Name: Samantha Newmark
-ID: ---------
+ID: 346587629
 Assignment: 2
 *******************/
 #include <stdio.h>
@@ -64,7 +64,7 @@ long long enterNumber(int task) {
 	long long number = 0;
 	int input = 0;
 	char caution = 0;
-	while ((input = scanf(" %lld%c", &number, &caution)) != 2 || caution != '\n' || number <= 0) {
+	while ((input = scanf(" %lld%c", &number, &caution)) != 2 || (task == HAPPYFACE && number % 2 == 0) || caution != '\n' || number <= 0) {
 		if (input != TERMINATE) {
 			if (caution != '\n') {
 				scanf("%*[^\n]");
