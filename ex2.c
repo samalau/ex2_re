@@ -230,7 +230,7 @@ void circle() {
 			return;
 		}
 
-		if (number == 2 || number == 3) {
+		if (number == 2 || number == 3 || number == 5 || number == 7) {
 			printf("This number completes the circle of joy!\n");
 			return;
 		}
@@ -239,6 +239,23 @@ void circle() {
 			if (number % i == 0 || number % (i + 2) == 0) {
 				printf("The circle remains incomplete.\n");
 				return;
+			}
+		}
+		long long reversed = 0, temp = number;
+		while (temp > 0) {
+			reversed = reversed * 10 + temp % 10;
+			temp /= 10;
+		}
+		if (reversed == 1 || reversed % 2 == 0 || reversed % 3 == 0) {
+			printf("The circle remains incomplete.\n");
+			return;
+		}
+		if (reversed != 2 && reversed != 3 && reversed != 5 && reversed != 7) {
+			for (long long i = 5; i <= sqRt(reversed); i += 6) {
+				if (reversed % i == 0 || reversed % (i + 2) == 0) {
+					printf("The circle remains incomplete.\n");
+					return;
+				}
 			}
 		}
 		printf("This number completes the circle of joy!\n");
