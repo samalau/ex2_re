@@ -61,22 +61,16 @@ long long enterNumber(int task) {
 		}
 	}
 	
-	long long number = 0;
+	long long number = 0, numberTmp = 0;
 	int input = 0;
 	char caution = 0;
-	while ((input = scanf(" %lld%c", &number, &caution)) != 2 || caution != '\n' || number <= 0 || (task == HAPPYFACE && number % 2 == 0)) {
+	while ((input = scanf(" %lld%c", &numberTmp, &caution)) != 2 || caution != '\n' || numberTmp <= 0 || (task == UNSELECTED && (numberTmp < HAPPYFACE || numberTmp > GOODBYE)) || (task == HAPPYFACE && numberTmp % 2 == 0)) {
 		if (input != TERMINATE) {
 			if (caution != '\n') {
 				scanf("%*[^\n]");
 			}
 			switch(task) {
 				case UNSELECTED: {
-					if (number == GOODBYE) {
-						return terminate();
-					}
-					if (number >= HAPPYFACE || number < GOODBYE) {
-						return number;
-					}
 					printf("This option is not available, please try again.\n");
 					break;
 				}
@@ -97,13 +91,9 @@ long long enterNumber(int task) {
 		}
 		return terminate();
 	}
-	if (task == UNSELECTED) {
-		if (number == GOODBYE) {
-			return terminate();
-		}
-		if (number >= HAPPYFACE || number < GOODBYE) {
-		return number;
-		}
+	number = numberTmp;
+	if (task == UNSELECTED && number == GOODBYE) {
+		return terminate();
 	}
 	return number;
 }
