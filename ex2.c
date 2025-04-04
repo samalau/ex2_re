@@ -74,6 +74,9 @@ long long enterNumber(int task) {
 					if (number == GOODBYE) {
 						return terminate();
 					}
+					if (number >= HAPPYFACE || number < GOODBYE) {
+						return number;
+					}
 					printf("This option is not available, please try again.\n");
 					break;
 				}
