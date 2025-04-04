@@ -1,6 +1,6 @@
 /******************
 Name: Samantha Newmark
-ID: 346587629
+ID: *********
 Assignment: 2
 *******************/
 #include <stdio.h>
@@ -64,7 +64,7 @@ long long enterNumber(int task) {
 	long long number = 0;
 	int input = 0;
 	char caution = 0;
-	while ((input = scanf(" %lld%c", &number, &caution)) != 2 || (task == HAPPYFACE && number % 2 == 0) || caution != '\n' || number <= 0) {
+	while ((input = scanf(" %lld%c", &number, &caution)) != 2 || caution != '\n' || number <= 0 || (task == HAPPYFACE && number % 2 == 0)) {
 		if (input != TERMINATE) {
 			if (caution != '\n') {
 				scanf("%*[^\n]");
@@ -73,9 +73,6 @@ long long enterNumber(int task) {
 				case UNSELECTED: {
 					if (number == GOODBYE) {
 						return terminate();
-					}
-					if (number >= HAPPYFACE || number < GOODBYE) {
-						return number;
 					}
 					printf("This option is not available, please try again.\n");
 					break;
@@ -96,6 +93,14 @@ long long enterNumber(int task) {
 			continue;
 		}
 		return terminate();
+	}
+	if (task == UNSELECTED) {
+		if (number == GOODBYE) {
+			return terminate();
+		}
+		if (number >= HAPPYFACE || number < GOODBYE) {
+		return number;
+		}
 	}
 	return number;
 }
