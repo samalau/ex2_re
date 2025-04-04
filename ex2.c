@@ -30,17 +30,27 @@ int mainMenuOption;
 
 int terminate() {
 	mainMenuOption = GOODBYE;
+	printf("Thank you for your journey through Numeria!\n");
 	return TERMINATE;
 }
 
 long long enterNumber(int task) {
 	switch(task) {
 		case UNSELECTED: {
+			printf("Choose an option:");
+			printf("\n\t1. Happy Face");
+			printf("\n\t2. Balanced Number");
+			printf("\n\t3. Generous Number");
+			printf("\n\t4. Circle Of Joy");
+			printf("\n\t5. Happy Numbers");
+			printf("\n\t6. Festival Of Laughter");
+			printf("\n\t7. Exit\n");
 			break;
 		}
-		// case HAPPYFACE: {
-		// 	break;
-		// }
+		case HAPPYFACE: {
+			printf("Enter face size:\n");
+			break;
+		}
 		case FESTIVAL: {
 			printf("Enter maximum number for the festival:\n");
 			break;
@@ -61,15 +71,19 @@ long long enterNumber(int task) {
 			}
 			switch(task) {
 				case UNSELECTED: {
-					if (number < HAPPYFACE || number > GOODBYE) {
-						printf("This option is not available, please try again.\n");
-						continue;
+					if (number == GOODBYE) {
+						return terminate();
 					}
-					return number;
+					if (number >= HAPPYFACE || number < GOODBYE) {
+						return number;
+					}
+					printf("This option is not available, please try again.\n");
+					break;
 				}
-				// case HAPPYFACE: {
-				// 	break;
-				// }
+				case HAPPYFACE: {
+					printf("The face's size must be an odd and positive number, please try again:\n");
+					break;
+				}
 				case FESTIVAL: {
 					printf("Only positive maximum number is allowed, please try again:\n");
 					break;
@@ -129,32 +143,21 @@ void happyFace() {
 	}
 	scanf("%*[^\n]");
 
-	printf("Enter face size:\n");
-	int size = 0;
-	input = 0;
-	while ((input = scanf(" %d", &size)) != 1 && size > 0 && size % 2) {
-		if (input != TERMINATE) {
-			scanf("%*[^\n]");
-			printf("The face's size must be an odd and positive number, please try again:\n");
-			continue;
-		}
-		return;
-	}
-	scanf("%*[^\n]");
+	long long size = enterNumber(HAPPYFACE);
 
 	printf("%c", eyes);
-	for (int i = 1; i < size + 1; i++) {
+	for (long long i = 1; i < size + 1; i++) {
 		printf(" ");
 	}
 	printf("%c\n", eyes);
 
-	for (int i = 0; i < (size + 1) / 2; i++) {
+	for (long long i = 0; i < (size + 1) / 2; i++) {
 		printf(" ");
 	}
 	printf("%c\n", nose);
 
 	printf("\\");
-	for (int i = 0; i < size + 1; i++) {
+	for (long long i = 0; i < size + 1; i++) {
 		printf("%c", mouth);
 	}
 	printf("/\n");
@@ -278,15 +281,20 @@ void bringHappiness() {
 // CASE 6
 void festival() {
 	printf("Enter a smile and cheer number:\n");
-	int smileNumber, cheerNumber;
-	while (!(scanf(" smile : %d , cheer : %d", &smileNumber, &cheerNumber) == 2
-	&& smileNumber > 0 && cheerNumber > 0 && smileNumber != cheerNumber)) {
-		scanf("%*[^\n]");
-		printf("Only 2 different positive numbers"
-		" in the given format are allowed"
-		" for the festival, please try again:\n");
+	int smileNumber = 0, cheerNumber = 0, input = 0;
+	char caution = 0;
+	while ((input = scanf(" smile : %d , cheer : %d%c", &smileNumber, &cheerNumber, &caution)) != 3 || caution != '\n' || smileNumber <= 0 || cheerNumber <= 0 || cheerNumber == smileNumber) {
+		if (input != TERMINATE) {
+			if (caution != '\n') {
+				scanf("%*[^\n]");
+			}
+			printf("Only 2 different positive numbers in the given format"
+			" are allowed for the festival, please try again:\n"
+			);
+		}
+		terminate();
+		return;
 	}
-	scanf("%*[^\n]");
 
 	long long maxNum = enterNumber(FESTIVAL);
 	if (maxNum != TERMINATE) {
@@ -300,19 +308,11 @@ void festival() {
 }
 
 int main() {
-	while (mainMenuOption != GOODBYE) {
-		mainMenuOption = UNSELECTED;
-
-		printf("Choose an option:");
-		printf("\n\t1. Happy Face");
-		printf("\n\t2. Balanced Number");
-		printf("\n\t3. Generous Number");
-		printf("\n\t4. Circle Of Joy");
-		printf("\n\t5. Happy Numbers");
-		printf("\n\t6. Festival Of Laughter");
-		printf("\n\t7. Exit\n");
-		
+	while (mainMenuOption != GOODBYE && mainMenuOption != TERMINATE) {
 		mainMenuOption = enterNumber(UNSELECTED);
+		if (mainMenuOption == TERMINATE || mainMenuOption == GOODBYE) {
+			return TERMINATE;
+		}
 		switch (mainMenuOption) {
 			case HAPPYFACE: {
 				happyFace();
@@ -343,6 +343,5 @@ int main() {
 			}
 		}
 	}
-	printf("Thank you for your journey through Numeria!\n");
-	return 0;
+	return TERMINATE;
 }
