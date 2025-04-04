@@ -5,6 +5,7 @@ Assignment: 2
 *******************/
 #include <stdio.h>
 
+#define TERMINATE -1
 #define UNSELECTED 0
 #define HAPPYFACE 1
 #define DIGITBALANCE 2
@@ -13,12 +14,11 @@ Assignment: 2
 #define BRINGHAPPINESS 5
 #define FESTIVAL 6
 #define GOODBYE 7
-#define TERMINATE -1
 
 int terminate();
-long long enterNumber(long long number);
+long long enterNumber();
 double absDif(double n, double m);
-double sqRt(int n);
+double sqRt(long long n);
 void festival();
 void bringHappiness();
 void prime();
@@ -33,10 +33,11 @@ int terminate() {
 	return TERMINATE;
 }
 
-long long enterNumber(long long number) {
+long long enterNumber() {
 	printf("Enter a number:\n");
-	char caution;
+	long long number = 0;
 	int input = 0;
+	char caution = 0;
 	while ((input = scanf(" %lld%c", &number, &caution)) != 2 || caution != '\n' || number <= 0) {
 		if (input != TERMINATE) {
 			if (caution != '\n') {
@@ -54,7 +55,7 @@ double absDif(double n, double m) {
 	return (n - m) < 0 ? (m - n) : (n - m);
 }
 
-double sqRt(int n) {
+double sqRt(long long n) {
 	double t = (double)n;
 	double m = 1;
 	while (absDif(t, m) > 0.000001) {
@@ -70,26 +71,26 @@ void happyFace() {
 	char eyes = ' ';
 	int input = 0;
 	while ((input = scanf(" %c", &eyes)) != 1) {
-		if (input != TERMINATE) {
-			continue;
+		if (input == TERMINATE) {
+			terminate();
+			return;
 		}
-		return terminate();
 	}
 	char nose = ' ';
 	input = 0;
 	while ((input = scanf(" %c", &nose)) != 1) {
-		if (input != TERMINATE) {
-			continue;
+		if (input == TERMINATE) {
+			terminate();
+			return;
 		}
-		return terminate();
 	}
 	char mouth = ' ';
 	input = 0;
 	while ((input = scanf(" %c", &mouth)) != 1) {
-		if (input != TERMINATE) {
-			continue;
+		if (input == TERMINATE) {
+			terminate();
+			return;
 		}
-		return terminate();
 	}
 	scanf("%*[^\n]");
 
@@ -126,8 +127,8 @@ void happyFace() {
 
 // CASE 2
 void digitBalance() {
-	long long number;
-	if (enterNumber(&number) != TERMINATE) {
+	long long number = enterNumber();
+	if (number != TERMINATE) {
 		int len = 0;
 		long long t = number;
 		while (t != 0) {
@@ -173,10 +174,10 @@ void digitBalance() {
 
 // CASE 3
 void abundance() {
-	long long number;
-	if (enterNumber(&number) != TERMINATE) {
-		int sum = 0;
-		for (int i = 1; i * i <= number; i++) {
+	long long number = enterNumber();
+	if (number != TERMINATE) {
+		long long sum = 0;
+		for (long long i = 1; i * i <= number; i++) {
 			if (!(number % i || number == number / i)) {
 				sum += i;
 				if (i != number / i) {
@@ -184,14 +185,16 @@ void abundance() {
 				}
 			}
 		}
-		sum > number ? printf("This number is generous!\n") : printf("This number does not share.\n");
+		sum > number
+			? printf("This number is generous!\n")
+		: printf("This number does not share.\n");
 	}
 }
 
 // CASE 4
 void prime() {
-	long long number;
-	if (enterNumber(&number) != TERMINATE) {
+	long long number = enterNumber();
+	if (number != TERMINATE) {
 		if (number == 1 || !(number % 2) || !(number % 3)) {
 			printf("The circle remains incomplete.\n");
 			return;
@@ -202,7 +205,7 @@ void prime() {
 			return;
 		}
 
-		for (int i = 5; i <= sqRt(number); i++) {
+		for (long long i = 5; i <= sqRt(number); i++) {
 			if (!(number % i)) {
 				printf("The circle remains incomplete.\n");
 				return;
@@ -214,11 +217,11 @@ void prime() {
 
 // CASE 5
 void bringHappiness() {
-	long long number;
-	if (enterNumber(&number) != TERMINATE) {
-		int tag, digit, sum;
-		printf("Between 1 and %d only these numbers bring happiness: ", number);
-		for (int i = 1; i <= number; i++) {
+	long long number = enterNumber();
+	if (number != TERMINATE) {
+		long long tag, digit, sum;
+		printf("Between 1 and %lld only these numbers bring happiness: ", number);
+		for (long long i = 1; i <= number; i++) {
 			tag = i;
 			while (tag != 1 && tag != 4 && tag < 1000) {
 				sum = 0;
@@ -230,7 +233,7 @@ void bringHappiness() {
 				tag = sum;
 			}
 			if (tag == 1) {
-				printf("%d ", i);
+				printf("%lld ", i);
 			}
 		}
 		printf("\n");
