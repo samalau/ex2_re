@@ -16,7 +16,7 @@ Assignment: 2
 #define GOODBYE 7
 
 int terminate();
-long long enterNumber();
+long long enterNumber(int task);
 double absDif(double n, double m);
 double sqRt(long long n);
 void festival();
@@ -33,8 +33,21 @@ int terminate() {
 	return TERMINATE;
 }
 
-long long enterNumber() {
-	printf("Enter a number:\n");
+long long enterNumber(int task) {
+	switch(task) {
+		// case HAPPYFACE: {
+		// 	break;
+		// }
+		case FESTIVAL: {
+			printf("Enter maximum number for the festival:\n");
+			break;
+		}
+		default: {
+			printf("Enter a number:\n");
+			break;
+		}
+	}
+	
 	long long number = 0;
 	int input = 0;
 	char caution = 0;
@@ -43,7 +56,19 @@ long long enterNumber() {
 			if (caution != '\n') {
 				scanf("%*[^\n]");
 			}
-			printf("Only positive number is allowed, please try again:\n");
+			switch(task) {
+				// case HAPPYFACE: {
+				// 	break;
+				// }
+				case FESTIVAL: {
+					printf("Only positive maximum number is allowed, please try again:\n");
+					break;
+				}
+				default: {
+					printf("Only positive number is allowed, please try again:\n");
+					break;
+				}
+			}
 			continue;
 		}
 		return terminate();
@@ -127,7 +152,7 @@ void happyFace() {
 
 // CASE 2
 void digitBalance() {
-	long long number = enterNumber();
+	long long number = enterNumber(DIGITBALANCE);
 	if (number != TERMINATE) {
 		int len = 0;
 		long long t = number;
@@ -174,7 +199,7 @@ void digitBalance() {
 
 // CASE 3
 void abundance() {
-	long long number = enterNumber();
+	long long number = enterNumber(ABUNDANCE);
 	if (number != TERMINATE) {
 		long long sum = 0;
 		for (long long i = 1; i * i <= number; i++) {
@@ -193,7 +218,7 @@ void abundance() {
 
 // CASE 4
 void prime() {
-	long long number = enterNumber();
+	long long number = enterNumber(PRIME);
 	if (number != TERMINATE) {
 		if (number == 1 || !(number % 2) || !(number % 3)) {
 			printf("The circle remains incomplete.\n");
@@ -217,7 +242,7 @@ void prime() {
 
 // CASE 5
 void bringHappiness() {
-	long long number = enterNumber();
+	long long number = enterNumber(BRINGHAPPINESS);
 	if (number != TERMINATE) {
 		long long tag, digit, sum;
 		printf("Between 1 and %lld only these numbers bring happiness: ", number);
@@ -244,28 +269,23 @@ void bringHappiness() {
 void festival() {
 	printf("Enter a smile and cheer number:\n");
 	int smileNumber, cheerNumber, maxNum;
-	// EDGE: SCAN
 	while (!(scanf(" smile : %d , cheer : %d", &smileNumber, &cheerNumber) == 2
 	&& smileNumber > 0 && cheerNumber > 0 && smileNumber != cheerNumber)) {
-		scanf("%*[^\n]");  // EDGE: SCAN
+		scanf("%*[^\n]");
 		printf("Only 2 different positive numbers"
 		" in the given format are allowed"
 		" for the festival, please try again:\n");
 	}
-	scanf("%*[^\n]");  // EDGE: SCAN
+	scanf("%*[^\n]");
 
-	printf("Enter maximum number for the festival:\n");
-	while (!(scanf(" %d", &maxNum) && maxNum > 0)) {  // EDGE: SCAN
-		scanf("%*[^\n]");  // EDGE: SCAN
-		printf("Only positive maximum number is allowed, please try again:\n");
-	}
-	scanf("%*[^\n]");  // EDGE: SCAN
-
-	for (int i = 1; i <= maxNum; i++) {
-		!(i % smileNumber || i % cheerNumber) ? printf("Festival!\n")
-		: !(i % smileNumber) ? printf("Smile!\n")
-		: !(i % cheerNumber) ? printf("Cheer!\n")
-		: printf("%d\n", i);
+	long long maxNum = enterNumber(FESTIVAL);
+	if (maxNum != TERMINATE) {
+		for (int i = 1; i <= maxNum; i++) {
+			!(i % smileNumber || i % cheerNumber) ? printf("Festival!\n")
+			: !(i % smileNumber) ? printf("Smile!\n")
+			: !(i % cheerNumber) ? printf("Cheer!\n")
+			: printf("%d\n", i);
+		}
 	}
 }
 
