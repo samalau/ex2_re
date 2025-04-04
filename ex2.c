@@ -121,25 +121,9 @@ double sqRt(long long n) {
 // CASE 1
 void happyFace() {
 	printf("Enter symbols for the eyes, nose, and mouth:\n");
-	char eyes = ' ';
+	char eyes = 0, nose = 0, mouth = 0;
 	int input = 0;
-	while ((input = scanf(" %c", &eyes)) != 1) {
-		if (input == TERMINATE) {
-			terminate();
-			return;
-		}
-	}
-	char nose = ' ';
-	input = 0;
-	while ((input = scanf(" %c", &nose)) != 1) {
-		if (input == TERMINATE) {
-			terminate();
-			return;
-		}
-	}
-	char mouth = ' ';
-	input = 0;
-	while ((input = scanf(" %c", &mouth)) != 1) {
+	while ((input = scanf(" %c %c %c", &eyes, &nose, &mouth)) != 3) {
 		if (input == TERMINATE) {
 			terminate();
 			return;
