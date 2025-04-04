@@ -10,7 +10,7 @@ Assignment: 2
 #define HAPPYFACE 1
 #define DIGITBALANCE 2
 #define ABUNDANCE 3
-#define PRIME 4
+#define CIRCLE 4
 #define BRINGHAPPINESS 5
 #define FESTIVAL 6
 #define GOODBYE 7
@@ -21,7 +21,7 @@ double absDif(double n, double m);
 double sqRt(long long n);
 void festival();
 void bringHappiness();
-void prime();
+void circle();
 void abundance();
 void digitBalance();
 void happyFace();
@@ -222,10 +222,10 @@ void abundance() {
 }
 
 // CASE 4
-void prime() {
-	long long number = enterNumber(PRIME);
+void circle() {
+	long long number = enterNumber(CIRCLE);
 	if (number != TERMINATE) {
-		if (number == 1 || !(number % 2) || !(number % 3)) {
+		if (number == 1 || number % 2 == 0 || number % 3 == 0) {
 			printf("The circle remains incomplete.\n");
 			return;
 		}
@@ -235,8 +235,8 @@ void prime() {
 			return;
 		}
 
-		for (long long i = 5; i <= sqRt(number); i++) {
-			if (!(number % i)) {
+		for (long long i = 5; i <= sqRt(number); i += 6) {
+			if (number % i == 0 || number % (i + 2) == 0) {
 				printf("The circle remains incomplete.\n");
 				return;
 			}
@@ -319,8 +319,8 @@ int main() {
 				abundance();
 				break;
 			}
-			case PRIME: {
-				prime();
+			case CIRCLE: {
+				circle();
 				break;
 			}
 			case BRINGHAPPINESS: {
