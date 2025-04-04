@@ -71,7 +71,7 @@ long long enterNumber(int task) {
 			return terminate();
 		}
 		scanf("%*[^\n]");
-		
+
 		switch(task) {
 			case UNSELECTED: {
 				if (numberTmp == GOODBYE) {
@@ -149,7 +149,7 @@ void happyFace() {
 	printf("%c\n", nose);
 
 	printf("\\");
-	for (long long i = 0; i < size + 1; i++) {
+	for (long long i = 0; i < size; i++) {
 		printf("%c", mouth);
 	}
 	printf("/\n");
