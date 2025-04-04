@@ -35,6 +35,9 @@ int terminate() {
 
 long long enterNumber(int task) {
 	switch(task) {
+		case UNSELECTED: {
+			break;
+		}
 		// case HAPPYFACE: {
 		// 	break;
 		// }
@@ -57,6 +60,13 @@ long long enterNumber(int task) {
 				scanf("%*[^\n]");
 			}
 			switch(task) {
+				case UNSELECTED: {
+					if (number < HAPPYFACE || number > GOODBYE) {
+						printf("This option is not available, please try again.\n");
+						continue;
+					}
+					return number;
+				}
 				// case HAPPYFACE: {
 				// 	break;
 				// }
@@ -268,7 +278,7 @@ void bringHappiness() {
 // CASE 6
 void festival() {
 	printf("Enter a smile and cheer number:\n");
-	int smileNumber, cheerNumber, maxNum;
+	int smileNumber, cheerNumber;
 	while (!(scanf(" smile : %d , cheer : %d", &smileNumber, &cheerNumber) == 2
 	&& smileNumber > 0 && cheerNumber > 0 && smileNumber != cheerNumber)) {
 		scanf("%*[^\n]");
@@ -292,6 +302,7 @@ void festival() {
 int main() {
 	while (mainMenuOption != GOODBYE) {
 		mainMenuOption = UNSELECTED;
+
 		printf("Choose an option:");
 		printf("\n\t1. Happy Face");
 		printf("\n\t2. Balanced Number");
@@ -301,13 +312,7 @@ int main() {
 		printf("\n\t6. Festival Of Laughter");
 		printf("\n\t7. Exit\n");
 		
-		if (!(scanf(" %d", &mainMenuOption) && mainMenuOption >= HAPPYFACE && mainMenuOption <= GOODBYE)) {  // EDGE: SCAN
-			scanf("%*[^\n]");  // EDGE: SCAN
-			printf("This option is not available, please try again.\n");
-			continue;
-		}
-		scanf("%*[^\n]");  // EDGE: SCAN
-
+		mainMenuOption = enterNumber(UNSELECTED);
 		switch (mainMenuOption) {
 			case HAPPYFACE: {
 				happyFace();
