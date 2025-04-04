@@ -291,9 +291,9 @@ void bringHappiness() {
 // CASE 6
 void festival() {
 	printf("Enter a smile and cheer number:\n");
-	int smileNumber = 0, cheerNumber = 0, input = 0;
-	while ((input = scanf(" smile : %d , cheer : %d", &smileNumber, &cheerNumber)) != 2 || smileNumber <= 0 || cheerNumber <= 0 || cheerNumber == smileNumber) {
-			if (input == TERMINATE) {
+	int input = 0, smileNumber = 0, smileNumberTmp = 0, cheerNumber = 0, cheerNumberTmp = 0;
+	while ((input = scanf(" smile : %d , cheer : %d", &smileNumberTmp, &cheerNumberTmp)) != 2 || smileNumberTmp <= 0 || cheerNumberTmp <= 0 || cheerNumberTmp == smileNumberTmp) {	
+		if (input == TERMINATE) {
 			terminate();
 			return;
 		}
@@ -302,6 +302,9 @@ void festival() {
 		" are allowed for the festival, please try again:\n"
 		);
 	}
+	scanf("%*[^\n]");
+	smileNumber = smileNumberTmp;
+	cheerNumber = cheerNumberTmp;
 
 	long long maxNum = enterNumber(FESTIVAL);
 	if (maxNum != TERMINATE) {
