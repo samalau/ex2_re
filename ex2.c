@@ -128,6 +128,7 @@ void happyFace() {
 			terminate();
 			return;
 		}
+		scanf("%*[^\n]");
 	}
 	scanf("%*[^\n]");
 
