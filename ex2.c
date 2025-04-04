@@ -291,19 +291,15 @@ void bringHappiness() {
 void festival() {
 	printf("Enter a smile and cheer number:\n");
 	int smileNumber = 0, cheerNumber = 0, input = 0;
-	char caution = 0;
-	while ((input = scanf(" smile : %d , cheer : %d%c", &smileNumber, &cheerNumber, &caution)) != 3 || caution != '\n' || smileNumber <= 0 || cheerNumber <= 0 || cheerNumber == smileNumber) {
-		if (input != TERMINATE) {
-			if (caution != '\n') {
-				scanf("%*[^\n]");
-			}
-			printf("Only 2 different positive numbers in the given format"
-			" are allowed for the festival, please try again:\n"
-			);
-			continue;
+	while ((input = scanf(" smile : %d , cheer : %d", &smileNumber, &cheerNumber)) != 3 || smileNumber <= 0 || cheerNumber <= 0 || cheerNumber == smileNumber) {
+		if (input == TERMINATE) {
+			terminate();
+			return;
 		}
-		terminate();
-		return;
+		scanf("%*[^\n]");
+		printf("Only 2 different positive numbers in the given format"
+		" are allowed for the festival, please try again:\n"
+		);
 	}
 
 	long long maxNum = enterNumber(FESTIVAL);
