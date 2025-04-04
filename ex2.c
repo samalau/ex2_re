@@ -13,7 +13,10 @@ Assignment: 2
 #define BRINGHAPPINESS 5
 #define FESTIVAL 6
 #define GOODBYE 7
+#define TERMINATE -1
 
+int terminate();
+long long enterNumber(long long number);
 double absDif(double n, double m);
 double sqRt(int n);
 void festival();
@@ -22,6 +25,30 @@ void prime();
 void abundance();
 void digitBalance();
 void happyFace();
+
+int mainMenuOption;
+
+int terminate() {
+	mainMenuOption = GOODBYE;
+	return TERMINATE;
+}
+
+long long enterNumber(long long number) {
+	printf("Enter a number:\n");
+	char caution;
+	int input = 0;
+	while ((input = scanf(" %lld%c", &number, &caution)) != 2 || caution != '\n' || number <= 0) {
+		if (input != TERMINATE) {
+			if (caution != '\n') {
+				scanf("%*[^\n]");
+			}
+			printf("Only positive number is allowed, please try again:\n");
+			continue;
+		}
+		return terminate();
+	}
+	return number;
+}
 
 double absDif(double n, double m) {
 	return (n - m) < 0 ? (m - n) : (n - m);
@@ -40,16 +67,42 @@ double sqRt(int n) {
 // CASE 1
 void happyFace() {
 	printf("Enter symbols for the eyes, nose, and mouth:\n");
-	char eyes; scanf(" %c", &eyes);
-	char nose; scanf(" %c", &nose);
-	char mouth; scanf(" %c", &mouth);
+	char eyes = ' ';
+	int input = 0;
+	while ((input = scanf(" %c", &eyes)) != 1) {
+		if (input != TERMINATE) {
+			continue;
+		}
+		return terminate();
+	}
+	char nose = ' ';
+	input = 0;
+	while ((input = scanf(" %c", &nose)) != 1) {
+		if (input != TERMINATE) {
+			continue;
+		}
+		return terminate();
+	}
+	char mouth = ' ';
+	input = 0;
+	while ((input = scanf(" %c", &mouth)) != 1) {
+		if (input != TERMINATE) {
+			continue;
+		}
+		return terminate();
+	}
 	scanf("%*[^\n]");
 
 	printf("Enter face size:\n");
-	int size;
-	while (!(scanf(" %d", &size) && size > 0 && size % 2)) {
-		scanf("%*[^\n]");
-		printf("The face's size must be an odd and positive number, please try again:\n");
+	int size = 0;
+	input = 0;
+	while ((input = scanf(" %d", &size)) != 1 && size > 0 && size % 2) {
+		if (input != TERMINATE) {
+			scanf("%*[^\n]");
+			printf("The face's size must be an odd and positive number, please try again:\n");
+			continue;
+		}
+		return;
 	}
 	scanf("%*[^\n]");
 
@@ -73,166 +126,137 @@ void happyFace() {
 
 // CASE 2
 void digitBalance() {
-	printf("Enter a number:\n");
-	long long n;
-	while (!(scanf(" %lld", &n))) {
-		scanf("%*[^\n]");
-		printf("Only positive number is allowed, please try again:\n");
-	}
-	scanf("%*[^\n]");
+	long long number;
+	if (enterNumber(&number) != TERMINATE) {
+		int len = 0;
+		long long t = number;
+		while (t != 0) {
+			t /= 10;
+			len++;
+		}
+		if (len == 1) {
+			printf("This number is balanced and brings harmony!\n");
+			return;
+		}
 
-	int len = 0;
-	long long t = n;
-	while (t != 0) {
-		t /= 10;
-		len++;
-	}
-	if (len == 1) {
-		printf("This number is balanced and brings harmony!\n");
-		return;
-	}
+		int div = 1;
+		for (int i = 0; i < len / 2; i++) {
+			div *= 10;
+		}
+		if ((len % 2)) {
+			div *= 10;
+		}
 
-	long long div = 1;
-	for (int i = 0; i < len / 2; i++) {
-		div *= 10;
-	}
-	if ((len % 2)) {
-		div *= 10;
-	}
+		long long left = number / (long long)div;
+		while (left > 9) {
+			left = (left % 10) + (left / 10);
+		}
 
-	long long left = n / div;
-	while (left > 9) {
-		left = (left % 10) + (left / 10);
-	}
+		div = 1;
+		for (int i = 1 + len/2; i < len; i++) {
+			div *= 10;
+		}
+		if (!(len % 2)) {
+			div *= 10;
+		}
 
-	div = 1;
-	for (int i = 1 + len/2; i < len; i++) {
-		div *= 10;
-	}
-	if (!(len % 2)) {
-		div *= 10;
-	}
+		long long right = number % (long long)div;
+		while (right > 9) {
+			right = (right % 10) + (right / 10);
+		}
 
-	long long right = n % div;
-	while (right > 9) {
-		right = (right % 10) + (right / 10);
-	}
-
-	(left - right)
-		? printf("This number isn't balanced and destroys harmony.\n")
+		(left - right)
+			? printf("This number isn't balanced and destroys harmony.\n")
 		: printf("This number is balanced and brings harmony!\n");
+	}
 }
 
 // CASE 3
 void abundance() {
-	printf("Enter a number:\n");
-	int n;
-	while (!(scanf(" %d", &n) && n > 0)) {
-		scanf("%*[^\n]");
-		printf("Only positive number is allowed, please try again:\n");
-	}
-	scanf("%*[^\n]");
-
-	int sum = 0;
-	for (int i = 1; i * i <= n; i++) {
-		if (!(n % i || n == n / i)) {
-			sum += i;
-			if (i != n / i) {
-				sum += n / i;
+	long long number;
+	if (enterNumber(&number) != TERMINATE) {
+		int sum = 0;
+		for (int i = 1; i * i <= number; i++) {
+			if (!(number % i || number == number / i)) {
+				sum += i;
+				if (i != number / i) {
+					sum += number / i;
+				}
 			}
 		}
+		sum > number ? printf("This number is generous!\n") : printf("This number does not share.\n");
 	}
-	sum > n ? printf("This number is generous!\n") : printf("This number does not share.\n");
 }
 
 // CASE 4
 void prime() {
-	printf("Enter a number:\n");
-	int n;
-	while (!(scanf(" %d", &n) && n > 0)) {
-		scanf("%*[^\n]");
-		printf("Only positive number is allowed, please try again:\n");
-	}
-	scanf("%*[^\n]");
-
-	if (n == 1 || !(n % 2) || !(n % 3)) {
-		printf("The circle remains incomplete.\n");
-		return;
-	}
-
-	if (n == 2 || n == 3) {
-		printf("This number completes the circle of joy!\n");
-		return;
-	}
-
-	for (int i = 5; i <= sqRt(n); i++) {
-		if (!(n % i)) {
+	long long number;
+	if (enterNumber(&number) != TERMINATE) {
+		if (number == 1 || !(number % 2) || !(number % 3)) {
 			printf("The circle remains incomplete.\n");
 			return;
 		}
+
+		if (number == 2 || number == 3) {
+			printf("This number completes the circle of joy!\n");
+			return;
+		}
+
+		for (int i = 5; i <= sqRt(number); i++) {
+			if (!(number % i)) {
+				printf("The circle remains incomplete.\n");
+				return;
+			}
+		}
+		printf("This number completes the circle of joy!\n");
 	}
-	printf("This number completes the circle of joy!\n");
 }
 
 // CASE 5
 void bringHappiness() {
-	printf("Enter a number:\n");
-	// int *seen[1000];
-	int n, tag, digit, sum;
-	// int n, tag, t, digit, sum;
-	while (!(scanf(" %d", &n) && n > 0)) {
-		scanf("%*[^\n]");
-		printf("Only positive number is allowed, please try again:\n");
-	}
-	scanf("%*[^\n]");
-
-	printf("Between 1 and %d only these numbers bring happiness: ", n);
-	for (int i = 1; i <= n; i++) {
-		// *seen = 0;
-		tag = i;
-		while (tag != 1 && tag != 4 && tag < 1000) {
-		// while (tag != 1 && tag != 4 && tag < 1000 && ! (*seen[tag])) {
-			// seen[tag] = 1;
-			// t = tag;
-			sum = 0;
-			while (tag > 0) {
-				digit = tag % 10;
-				sum += digit * digit;
-				tag /= 10;
+	long long number;
+	if (enterNumber(&number) != TERMINATE) {
+		int tag, digit, sum;
+		printf("Between 1 and %d only these numbers bring happiness: ", number);
+		for (int i = 1; i <= number; i++) {
+			tag = i;
+			while (tag != 1 && tag != 4 && tag < 1000) {
+				sum = 0;
+				while (tag > 0) {
+					digit = tag % 10;
+					sum += digit * digit;
+					tag /= 10;
+				}
+				tag = sum;
 			}
-			// while (t > 0) {
-			// 	digit = t % 10;
-			// 	sum += digit * digit;
-			// 	t /= 10;
-			// }
-			tag = sum;
+			if (tag == 1) {
+				printf("%d ", i);
+			}
 		}
-		if (tag == 1) {
-			printf("%d ", i);
-		}
+		printf("\n");
 	}
-	printf("\n");
 }
 
 // CASE 6
 void festival() {
 	printf("Enter a smile and cheer number:\n");
 	int smileNumber, cheerNumber, maxNum;
+	// EDGE: SCAN
 	while (!(scanf(" smile : %d , cheer : %d", &smileNumber, &cheerNumber) == 2
 	&& smileNumber > 0 && cheerNumber > 0 && smileNumber != cheerNumber)) {
-		scanf("%*[^\n]");
+		scanf("%*[^\n]");  // EDGE: SCAN
 		printf("Only 2 different positive numbers"
 		" in the given format are allowed"
 		" for the festival, please try again:\n");
 	}
-	scanf("%*[^\n]");
+	scanf("%*[^\n]");  // EDGE: SCAN
 
 	printf("Enter maximum number for the festival:\n");
-	while (!(scanf(" %d", &maxNum) && maxNum > 0)) {
-		scanf("%*[^\n]");
+	while (!(scanf(" %d", &maxNum) && maxNum > 0)) {  // EDGE: SCAN
+		scanf("%*[^\n]");  // EDGE: SCAN
 		printf("Only positive maximum number is allowed, please try again:\n");
 	}
-	scanf("%*[^\n]");
+	scanf("%*[^\n]");  // EDGE: SCAN
 
 	for (int i = 1; i <= maxNum; i++) {
 		!(i % smileNumber || i % cheerNumber) ? printf("Festival!\n")
@@ -243,9 +267,8 @@ void festival() {
 }
 
 int main() {
-	int option = UNSELECTED;
-	while (option != GOODBYE) {
-		option = UNSELECTED;
+	while (mainMenuOption != GOODBYE) {
+		mainMenuOption = UNSELECTED;
 		printf("Choose an option:");
 		printf("\n\t1. Happy Face");
 		printf("\n\t2. Balanced Number");
@@ -255,14 +278,14 @@ int main() {
 		printf("\n\t6. Festival Of Laughter");
 		printf("\n\t7. Exit\n");
 		
-		if (!(scanf(" %d", &option) && option >= HAPPYFACE && option <= GOODBYE)) {
-			scanf("%*[^\n]");
+		if (!(scanf(" %d", &mainMenuOption) && mainMenuOption >= HAPPYFACE && mainMenuOption <= GOODBYE)) {  // EDGE: SCAN
+			scanf("%*[^\n]");  // EDGE: SCAN
 			printf("This option is not available, please try again.\n");
 			continue;
 		}
-		scanf("%*[^\n]");
+		scanf("%*[^\n]");  // EDGE: SCAN
 
-		switch (option) {
+		switch (mainMenuOption) {
 			case HAPPYFACE: {
 				happyFace();
 				break;
