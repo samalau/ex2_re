@@ -64,7 +64,7 @@ long long enterNumber(int task) {
 	long long number = 0, numberTmp = 0;
 	int input = 0;
 	char caution = 0;
-	while ((input = scanf(" %lld%c", &numberTmp, &caution)) != 2 || caution != '\n' || numberTmp <= 0 || (task == HAPPYFACE && numberTmp % 2 == 0)) {
+	while ((input = scanf(" %lld", &numberTmp)) != 2 || scanf("%c", &caution) != 1 || caution != '\n' || numberTmp <= 0 || (task == HAPPYFACE && numberTmp % 2 == 0)) {
 		if (input == TERMINATE) {
 			return terminate();
 		}
@@ -84,7 +84,6 @@ long long enterNumber(int task) {
 				break;
 			}
 			case HAPPYFACE: {
-				scanf("%*[^\n]");
 				printf("The face's size must be an odd and positive number, please try again:\n");
 				break;
 			}
