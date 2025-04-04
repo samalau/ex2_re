@@ -144,23 +144,24 @@ void happyFace() {
 	scanf("%*[^\n]");
 
 	long long size = enterNumber(HAPPYFACE);
+	if (size != TERMINATE) {
+		printf("%c", eyes);
+		for (long long i = 1; i < size + 1; i++) {
+			printf(" ");
+		}
+		printf("%c\n", eyes);
 
-	printf("%c", eyes);
-	for (long long i = 1; i < size + 1; i++) {
-		printf(" ");
-	}
-	printf("%c\n", eyes);
+		for (long long i = 0; i < (size + 1) / 2; i++) {
+			printf(" ");
+		}
+		printf("%c\n", nose);
 
-	for (long long i = 0; i < (size + 1) / 2; i++) {
-		printf(" ");
+		printf("\\");
+		for (long long i = 0; i < size + 1; i++) {
+			printf("%c", mouth);
+		}
+		printf("/\n");
 	}
-	printf("%c\n", nose);
-
-	printf("\\");
-	for (long long i = 0; i < size + 1; i++) {
-		printf("%c", mouth);
-	}
-	printf("/\n");
 }
 
 // CASE 2
@@ -291,6 +292,7 @@ void festival() {
 			printf("Only 2 different positive numbers in the given format"
 			" are allowed for the festival, please try again:\n"
 			);
+			continue;
 		}
 		terminate();
 		return;
