@@ -291,8 +291,8 @@ void bringHappiness() {
 void festival() {
 	printf("Enter a smile and cheer number:\n");
 	int smileNumber = 0, cheerNumber = 0, input = 0;
-	while ((input = scanf(" smile : %d , cheer : %d", &smileNumber, &cheerNumber)) != 3 || smileNumber <= 0 || cheerNumber <= 0 || cheerNumber == smileNumber) {
-		if (input == TERMINATE) {
+	while ((input = scanf(" smile : %d , cheer : %d", &smileNumber, &cheerNumber)) != 2 || smileNumber <= 0 || cheerNumber <= 0 || cheerNumber == smileNumber) {
+			if (input == TERMINATE) {
 			terminate();
 			return;
 		}
