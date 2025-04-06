@@ -271,7 +271,7 @@ void bringHappiness() {
 		printf("Between 1 and %lld only these numbers bring happiness: ", number);
 		for (long long i = 1; i <= number; i++) {
 			tag = i;
-			while (tag != 1 && tag != 4 && tag < 1000) {
+			while (tag != 1 && tag != 4) {
 				sum = 0;
 				while (tag > 0) {
 					digit = tag % 10;
