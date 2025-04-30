@@ -175,7 +175,7 @@ void digitBalance() {
 		for (int i = 0; i < len / 2; i++) {
 			div *= 10;
 		}
-		if ((len % 2)) {
+		if (len % 2) {
 			div *= 10;
 		}
 
